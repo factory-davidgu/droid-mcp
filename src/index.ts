@@ -29,7 +29,7 @@ mcpServer.registerTool(
   },
   async ({ prompt, model, cwd }) => {
     return new Promise((resolve) => {
-      const args = ["exec"];
+      const args = ["exec", "--skip-permissions-unsafe"];
 
       if (model) {
         args.push("-m", model);
