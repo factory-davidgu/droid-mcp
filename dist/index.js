@@ -3,7 +3,7 @@ import { spawn, execSync } from "child_process";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { existsSync, mkdirSync } from "fs";
+import { existsSync } from "fs";
 import { join } from "path";
 import { homedir } from "os";
 const mcpServer = new McpServer({
@@ -80,17 +80,14 @@ mcpServer.registerTool("droidExec", {
 });
 async function downloadBinary() {
     try {
-        const binDir = join(homedir(), ".droid", "bin");
-        const binaryPath = join(binDir, "droid");
+        const binaryPath = join(homedir(), ".local", "bin", "droid");
         if (existsSync(binaryPath)) {
             console.error("Droid binary already installed at:", binaryPath);
             return;
         }
         console.error("Downloading Droid binary...");
-        mkdirSync(binDir, { recursive: true });
         execSync("curl -fsSL https://app.factory.ai/cli | sh", {
             stdio: "inherit",
-            cwd: binDir,
         });
         console.error("Droid binary downloaded successfully");
     }

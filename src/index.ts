@@ -99,8 +99,7 @@ mcpServer.registerTool(
 
 async function downloadBinary() {
   try {
-    const binDir = join(homedir(), ".droid", "bin");
-    const binaryPath = join(binDir, "droid");
+    const binaryPath = join(homedir(), ".local", "bin", "droid");
 
     if (existsSync(binaryPath)) {
       console.error("Droid binary already installed at:", binaryPath);
@@ -108,11 +107,9 @@ async function downloadBinary() {
     }
 
     console.error("Downloading Droid binary...");
-    mkdirSync(binDir, { recursive: true });
 
     execSync("curl -fsSL https://app.factory.ai/cli | sh", {
       stdio: "inherit",
-      cwd: binDir,
     });
 
     console.error("Droid binary downloaded successfully");
